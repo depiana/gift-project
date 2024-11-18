@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Greeting and Game</title>
+    <style>
+        /* Umum */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg, #fc5185, #feffd2);
+            background-size: 400% 400%;
+            animation: backgroundAnimation 10s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        h1, h2 {
+            color: #fc5185;
+            animation: popIn 1s ease-out;
+        }
+
+        p {
+            font-size: 16px;
+            margin-top: 10px;
+            animation: slideUp 1s ease-out;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 20px 50;
+            border-radius: 5px;
+            color: #030303;
+            font-size: 16px;
+            resize: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #364f6b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #3fc1c9;
+        }
+
+        .wish-list {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .wish-list p {
+            background: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.8s ease;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Balon */
+        .balloons {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .balloon {
+            position: absolute;
+            bottom: -10%;
+            width: 40px;
+            height: 60px;
+            background-color: #fc5185;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            animation: floatUp 2s linear infinite;
+        }
+
+        /* Animasi */
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-120%);
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes backgroundAnimation {
+            0% { background: linear-gradient(45deg, #fc5185, #feffd2); }
+            50% { background: linear-gradient(45deg, #f3a1c5, #f8d3e1); }
+            100% { background: linear-gradient(45deg, #feffd2, #fc5185); }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+            width: 90%;
+            padding: 20px;
+            }
+         }
+
+        /* Rating */
+        .star {
+            font-size: 30px;
+            cursor: pointer;
+            color: #ddd;
+            transition: color 0.3s ease;
+        }
+
+        .star.filled {
+            color: #ffc107;
+        }
+
+        .rating-notification {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #fc5185;
+        }
+
+        .notification {
+            font-size: 18px;
+            color: red;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Halaman Pertama -->
+    <div class="container" id="page-1">
+        <h1>Hallo Selamat Datang</h1>
+        <p>Silahkan Masukkan Nama:</p>
+        <textarea id="nameInput" placeholder="Masukkan nama di sini..."></textarea>
+        <button id="submitName">Submit</button>
+    </div>
+
+    <!-- Halaman Kedua -->
+    <div class="container hidden" id="page-2">
+        <!-- Animasi Balon hanya di halaman kedua -->
+        <div class="balloons">
+            <div class="balloon"></div>
+            <div class="balloon"></div>
+            <div class="balloon"></div>
+            <div class="balloon"></div>
+            <div class="balloon"></div>
+        </div>
+
+        <h1 id="greeting"></h1>
+        <p>Mentor yang sangat baik hati dan tidak sombong :)</p>
+        <button id="wishListBtn">Wish List</button>
+        <button id="backBtn">Back</button>
+        <button id="nextBtn">Next</button>
+        <div class="wish-list hidden" id="wishList">
+            <p>Semoga sombong nya berkurang!</p>
+            <p>Semoga Tidak Menyebalkan lagi</p>
+            <p>Semoga cepat kaya dan bisa resegn tapi jangan nanem ganja</p>
+            <p>Semoga hari-hari mas alil penuh senyuman :) Jangan badmood terossss</p>
+            <p>git --version
+                kurangin ngerokoknya!</p>
+            <p>oh ya upload foto adik-adiknya jihan di instagram. Jangan pilih kasih!</p>
+        </div>
+    </div>
+
+    <!-- Halaman Ketiga -->
+    <div class="container hidden" id="page-3">
+        <h2>Terima kasih banyak Mas Alil sudah menjadi mentor yang baik hati</h2>
+        <p>Atas bimbingannya yang luar biasa. Jangan sombong ya Hehe 😊</p>
+        <p>Berikan penilaian untuk anak magangmu ini </p>
+        <p>Devina Nanda</p>
+        <div class="rating">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+        </div>
+        <p class="rating-notification hidden" id="ratingNotification"></p>
+        <button id="backToPage2Btn">Back</button>
+
+        <!-- Tombol Kejutan -->
+        <button id="nextMissionBtn">Mulai Kejutan</button>
+    </div>
+
+   <!-- Halaman Keempat (Game Klik Balon) -->
+<div class="container hidden" id="page-4">
+    <h1>Game Klik Balon</h1>
+    <p id="gameInstruction"></p> <!-- Menampilkan instruksi terkait nama pemain -->
+    <div class="game-area" id="gameArea" style="height: 250px; width: 80%; position: relative; background-color: #f9f9f9; border: 2px solid #fc5185; margin: 0 auto;"></div>
+    <div class="score-board" id="scoreBoard">Poin: 0</div>
+    <button id="startGame">Mulai Game</button>
+    <p id="timer">Waktu: 20 detik</p>
+    <div id="gameNotification" class="notification hidden"></div>
+    <button id="okBtn" class="hidden">OK</button>
+</div>
+
+    <script>
+        let playerName = '';
+        let score = 0;
+        let gameTime = 20;
+        let gameInterval;
+        let timerInterval;
+
+        // Menangani nama yang dimasukkan
+        document.getElementById('submitName').addEventListener('click', function() {
+            let name = document.getElementById('nameInput').value.trim();
+            if (name) {
+                playerName = name;
+                document.getElementById('greeting').innerText = `HAPPY BIRTHDAY ${name.toUpperCase()}! Selamat 40 Tahun 🎉`;
+                document.getElementById('page-1').classList.add('hidden');
+                document.getElementById('page-2').classList.remove('hidden');
+            } else {
+                alert('Silahkan masukkan nama Anda!');
+            }
+        });
+
+        // Tombol Back dari Halaman 2
+        document.getElementById('backBtn').addEventListener('click', function () {
+            document.getElementById('page-2').classList.add('hidden');
+            document.getElementById('page-1').classList.remove('hidden');
+        });
+
+        // Tombol Next dari Halaman 2
+        document.getElementById('nextBtn').addEventListener('click', function () {
+            document.getElementById('page-2').classList.add('hidden');
+            document.getElementById('page-3').classList.remove('hidden');
+        });
+
+        // Tombol Wish List
+        document.getElementById('wishListBtn').addEventListener('click', function () {
+            document.getElementById('wishList').classList.toggle('hidden');
+        });
+
+        // Tombol Back dari Halaman 3
+        document.getElementById('backToPage2Btn').addEventListener('click', function () {
+            document.getElementById('page-3').classList.add('hidden');
+            document.getElementById('page-2').classList.remove('hidden');
+        });
+
+        // Tombol Mulai Kejutan
+        document.getElementById('nextMissionBtn').addEventListener('click', function () {
+            document.getElementById('page-3').classList.add('hidden');
+            document.getElementById('page-4').classList.remove('hidden');
+        });
+
+        // Rating (Klik Bintang)
+        const stars = document.querySelectorAll('.star');
+        const ratingNotification = document.getElementById('ratingNotification');
+
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                const rating = this.getAttribute('data-value');
+                stars.forEach(s => s.classList.remove('filled')); // Clear previous selections
+                for (let i = 0; i < rating; i++) {
+                    stars[i].classList.add('filled'); // Fill selected stars
+                }
+
+                let message = '';
+                switch (rating) {
+                    case '1': message = 'Jahat sekali'; break;
+                    case '2': message = 'Sangat pelit'; break;
+                    case '3': message = 'Pelit'; break;
+                    case '4': message = 'Tanggung satu lagi'; break;
+                    case '5': message = 'HEHE SAYA MEMANG PERFECT :)'; break;
+                }
+
+                ratingNotification.innerText = message;
+                ratingNotification.classList.remove('hidden');
+            });
+        });
+
+        // Game (Klik Balon)
+        const startGameButton = document.getElementById('startGame');
+        const scoreBoard = document.getElementById('scoreBoard');
+        const gameArea = document.getElementById('gameArea');
+        const timerElement = document.getElementById('timer');
+        const gameNotification = document.getElementById('gameNotification');
+        const doneButton = document.getElementById('okBtn');
+
+        // Fungsi untuk mengupdate halaman dengan nama pengguna
+document.getElementById('submitName').addEventListener('click', function() {
+    let name = document.getElementById('nameInput').value.trim();
+    if (name) {
+        playerName = name;
+        // Update greeting di halaman 2
+        document.getElementById('greeting').innerText = `HAPPY BIRTHDAY ${name.toUpperCase()}! Selamat 40 Tahun 🎉`;
+
+        // Update instruksi di halaman 4
+        document.getElementById('gameInstruction').innerHTML = `Jika ${playerName} tidak mendapatkan poin lebih dari 50 maka ${playerName} harus mentraktir Devina!`;
+
+        // Menyembunyikan halaman 1 dan menampilkan halaman 2
+        document.getElementById('page-1').classList.add('hidden');
+        document.getElementById('page-2').classList.remove('hidden');
+    } else {
+        alert('Silahkan masukkan nama Anda!');
+    }
+});
+
+        // Mulai Game
+        startGameButton.addEventListener('click', function () {
+            score = 0;
+            scoreBoard.innerText = 'Poin: ' + score;
+            startGameButton.style.display = 'none';
+            doneButton.classList.remove('hidden');
+            gameInterval = setInterval(createBalloon, 500); // Mempercepat kemunculan balon
+            startTimer();
+        });
+
+        // Membuat balon
+        function createBalloon() {
+            const balloon = document.createElement('div');
+            balloon.classList.add('balloon');
+            balloon.style.left = Math.random() * 90 + '%';
+            balloon.style.bottom = '0'; // Balon muncul dari bawah area permainan
+            gameArea.appendChild(balloon);
+
+            balloon.addEventListener('click', function () {
+                score++;
+                scoreBoard.innerText = 'Poin: ' + score;
+                balloon.remove();
+            });
+
+            setTimeout(() => balloon.remove(), 2000);  // Menghapus balon setelah 2 detik
+        }
+
+        // Timer Game
+        function startTimer() {
+            timerInterval = setInterval(function() {
+                gameTime--;
+                timerElement.innerText = `Waktu: ${gameTime} detik`;
+                if (gameTime <= 0) {
+                    clearInterval(timerInterval);
+                    clearInterval(gameInterval);
+                    gameOver();
+                }
+            }, 1000);
+        }
+
+        // Menangani akhir game
+        function gameOver() {
+            if (score < 50) {
+                gameNotification.innerText = `${playerName} harus mentraktir Devina!`;
+                gameNotification.classList.remove('hidden');
+            }
+        }
+
+        // Tombol OK (Kembali ke halaman 1)
+        doneButton.addEventListener('click', function () {
+            document.getElementById('page-4').classList.add('hidden');
+            document.getElementById('page-1').classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
